@@ -44,6 +44,14 @@ class UserController extends Controller
             "password" => 'required'
        ]);
        if(auth()->attempt($validated)){
+        $user = auth()->user();
+
+        // Check if the user is marked as deleted
+        if ($user->isDeleted == 1) {
+            auth()->logout(); // Log out the user
+            return back()->withErrors(['email' => 'Your account has been deleted. Please contact support for assistance.'])->onlyInput('email');
+        }
+
         $request->session()->regenerate();
 
         return redirect('/')->with('message', 'Welcome Back!');
@@ -64,10 +72,14 @@ class UserController extends Controller
         ]);
         $validated['password'] = bcrypt($validated['password']);
 
+        if ($request->input('category') === 'Admin User') {
+            $validated['dateTime'] = null;
+            } else if($request->has('dateTime')) {
+                $validated['dateTime'] = $request->input('dateTime');
+            }
+        
         // If dateTime is provided, assign it to the validated data
-        if ($request->has('dateTime')) {
-            $validated['dateTime'] = $request->input('dateTime');
-        }
+        
         
         $user = User::create($validated);
  
@@ -121,7 +133,7 @@ class UserController extends Controller
         $user->isDeleted = true;
         $user->save();
     
-        return redirect('/users')->with('message', 'Data was successfully marked as deleted');
+        return redirect('/users')->with('message', 'Data was successfully deleted');
     }
     
 

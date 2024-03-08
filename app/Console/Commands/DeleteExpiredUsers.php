@@ -20,7 +20,7 @@ class DeleteExpiredUsers extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Delete Expired Users';
 
     /**
      * Execute the console command.

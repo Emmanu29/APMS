@@ -51,37 +51,37 @@ Route::delete('/animal/{animal}', [AnimalController::class, 'destroy'])->name('a
 
 Route::controller(UserController::class)->group(function(){
 
-    Route::get('/register','register')->middleware('auth');
+     Route::get('/register','register')->middleware('auth');
 
-    Route::get('/login','login')->name('login')->middleware('guest');
+     Route::get('/login','login')->name('login')->middleware('guest');
 
-    Route::post('/login/process', 'process')->middleware('checkIsDeleted');
+    // Route::post('/login/process', 'process')->middleware('checkIsDeleted');
 
-    Route::post('/logout', 'logout')->middleware('checkIsDeleted');
+    // Route::post('/logout', 'logout');
 
-    Route::post('/store', 'store')->middleware('checkIsDeleted');
+    // Route::post('/store', 'store')->middleware('checkIsDeleted');
 
-    Route::get('/users', 'index')->middleware(['auth', 'checkIsDeleted']);
+    // Route::get('/users', 'index')->middleware(['auth', 'checkIsDeleted']);
 
-    Route::get('/user/{user}', 'show')->middleware('checkIsDeleted');
+    // Route::get('/user/{user}', 'show')->middleware('checkIsDeleted');
 
-    Route::put('/user/{user}', 'update')->middleware('checkIsDeleted');
+    // Route::put('/user/{user}', 'update')->middleware('checkIsDeleted');
 
-    Route::delete('/user/{user}', 'destroy')->name('user.destroy')->middleware('checkIsDeleted');
+    // Route::delete('/user/{user}', 'destroy')->name('user.destroy')->middleware('checkIsDeleted');
 
-    // Route::post('/login/process','process');
+    Route::post('/login/process','process');
 
-    // Route::post('/logout','logout');
+    Route::post('/logout','logout');
 
-    // Route::post('/store','store');
+    Route::post('/store','store');
 
-    // Route::get('/users','index')->middleware('auth');
+    Route::get('/users','index')->middleware('auth');
 
-    // Route::get('/user/{user}', 'show');
+    Route::get('/user/{user}', 'show');
 
-    // Route::put('/user/{user}', 'update');
+    Route::put('/user/{user}', 'update');
 
-    // Route::delete('/user/{user}', 'destroy')->name('user.destroy');
+    Route::delete('/user/{user}', 'destroy')->name('user.destroy');
 });
 
 Route::controller(AnimalController::class)->group(function(){
