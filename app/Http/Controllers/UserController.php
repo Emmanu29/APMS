@@ -1,0 +1,139 @@
+<?php
+
+namespace App\Http\Controllers;
+use App\Http\Controllers\DateTime;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\DB; // Import the DB facade
+use Illuminate\Support\Facades\Hash;
+use App\Rules\FutureDateTime;
+
+
+class UserController extends Controller
+{
+
+    public function show(string $id){
+         $data = User::findOrFail($id);
+
+         return view('users.edit', ['user' => $data]);
+    }
+    
+    public function index(){
+        $data = [
+            "users" => DB::table('users')->where('isDeleted', false)->orderBy('created_at', 'desc')->simplePaginate(10)
+        ];
+
+        return view('users.index', $data);
+
+    }
+
+    public function login(){
+        if(View::exists('users.login')){
+            return view('users.login');
+        }else{
+            return abort(404);
+            //return response()->view('errors.404'); //customize 404 not found
+        }
+    }
+
+    public function process(Request $request){
+        $validated = $request->validate([
+            "email" => ['required', 'email'],
+            "password" => 'required'
+       ]);
+       if(auth()->attempt($validated)){
+        $request->session()->regenerate();
+
+        return redirect('/')->with('message', 'Welcome Back!');
+       }
+
+       return back()->withErrors(['email' => 'Login failed'])->onlyInput('email');
+    }
+
+    public function store(Request $request){
+        $validated = $request->validate([
+             "username" => ['required', 'min:4'],
+             "firstName" => ['required'],
+             "lastName" => ['required'],
+             "category" => ['required'],
+             "dateTime" => ['nullable', 'date_format:Y-m-d\TH:i'], // Add validation for dateTime
+             "email" => ['required', 'email', Rule::unique('users', 'email')],
+             "password" => 'required|confirmed|min:8'
+        ]);
+        $validated['password'] = bcrypt($validated['password']);
+
+        // If dateTime is provided, assign it to the validated data
+        if ($request->has('dateTime')) {
+            $validated['dateTime'] = $request->input('dateTime');
+        }
+        
+        $user = User::create($validated);
+ 
+        auth()->login($user, true); // Remember the user's login session
+
+        return back()->with('message', 'Congratulation, your account has been successfully created');
+     }
+
+     public function register(){
+        return view('users.register');
+    }
+ 
+     public function logout(Request $request){
+         auth()->logout();
+ 
+         $request->session()->invalidate();
+         $request->session()->regenerateToken();
+ 
+         return redirect('/login')->with('message', 'Logout Successful');
+ 
+     }
+
+     public function update(Request $request, User $user){
+        // Validate the incoming request data
+        $validated = $request->validate([
+            "username" => ['required', 'min:4'],
+            "firstName" => ['required'],
+            "lastName" => ['required'],
+            "category" => ['required'],
+            "dateTime" => ['nullable', 'date_format:Y-m-d\TH:i'],
+            "email" => ['required', 'email', Rule::unique('users', 'email')->ignore($user->id)],
+            "password" => 'required|confirmed|min:8'
+        ]);
+    
+        // Update the user record with validated data
+        $user->update([
+            'username' => $validated['username'],
+            'firstName' => $validated['firstName'],
+            'lastName' => $validated['lastName'],
+            'category' => $validated['category'],
+            'dateTime' => $validated['dateTime'] ?? null, // Use null coalescing operator to handle optional dateTime
+            'email' => $validated['email'],
+            'password' => bcrypt($validated['password']), // Encrypt password directly
+        ]);
+    
+        // Redirect back with a success message
+        return back()->with('message', 'User information updated successfully');
+    }
+    
+    public function destroy(User $user){
+        $user->isDeleted = true;
+        $user->save();
+    
+        return redirect('/users')->with('message', 'Data was successfully marked as deleted');
+    }
+    
+
+
+
+    // // Method to delete expired temporary users
+    // public function deleteExpiredTemporaryUsers(Request $request)
+    // {
+    //     User::where('category', 'Temporary User')
+    //         ->where('dateTime', '<=', now())
+    //         ->delete();
+
+    //     return response()->json(['message' => 'Expired temporary users deleted successfully.']);
+    // }
+}
