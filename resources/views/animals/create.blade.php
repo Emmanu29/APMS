@@ -3,21 +3,13 @@
 <?php $array = array('title' => 'Student System') ;?>
 <x-nav :data="$array"/>
 
-<header class="max-w-lg mx-auto mt-5">
-    <a href="#">
-        <h1 class="text-4xl font-bold text-black text-center">Add New Animal</h1>
-    </a>
-</header>
+<form action="/add/animal" method="POST">
+@csrf
+    <div class="max-w-2xl mx-auto py-12 mt-10">
+        <div class="bg-gray-500 shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col border-4 border-gray-900">
+            <h2 class="text-lg font-bold mb-4 text-center">Schedule an Appointment</h2>
+            <div class="grid grid-cols-2 gap-4">
 
-<main class="bg-green-300 max-w-lg mx-auto p-8 my-10 rounded-lg shadow-2xl mt-5 mb-10">
-    <section>
-        <h1 class="font-bold text-2xl ont-bold text-center">Welcome to Animal Patient Monitoring</h1>
-    </section>
-
-    <section class="mt-10">
-        <form action="/add/animal" method="POST" class="max-w-lg mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-            @csrf
-            
             <div class="mb-4">
                 <label for="species" class="block text-gray-700 text-sm font-bold mb-2">Species</label>
                 <select id="species" name="species" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
@@ -46,7 +38,7 @@
                     <p class="text-red-500 text-xs mt-2 p-1">{{ $message }}</p> 
                 @enderror
             </div>
-
+        
             <div class="mb-4">
                 <label for="age" class="block text-gray-700 text-sm font-bold mb-2">Age</label>
                 <input type="number" id="age" name="age" placeholder="Age" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value="{{old('age')}}">
@@ -69,9 +61,17 @@
                 @enderror
             </div> 
 
+            <div class="mb-4" id="dateTimeField">
+                <label for="dateTime" class="block text-gray-700 text-sm font-bold mb-2" id="dateTimeLabel">Date and Time:</label>
+                <input type="datetime-local" id="dateTime" name="dateTime" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value="{{ old('dateTime') }}">
+                @error('dateTime')
+                    <p class="text-red-500 text-xs mt-2 p-1">{{$message}}</p> 
+                @enderror
+            </div>
+
             <div class="mb-6">
-                <label for="health_history" class="block text-gray-700 text-sm font-bold mb-2">Health History</label>
-                <textarea id="health_history" name="health_history" placeholder="Health History" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">{{ old('health_history') }}</textarea>
+                <label for="health_history" class="block text-gray-700 text-sm font-bold mb-2">Reason for Appointment</label>
+                <textarea id="health_history" name="health_history" placeholder="Reason for Appointment" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">{{ old('health_history') }}</textarea>
                 @error('health_history')
                     <p class="text-red-500 text-xs mt-2 p-1">{{ $message }}</p> 
                 @enderror
@@ -100,13 +100,12 @@
                     <p class="text-red-500 text-xs mt-2 p-1">{{ $message }}</p> 
                 @enderror
             </div>
-
-            <div class="flex items-center justify-between">
-                <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2 mb-4 px-4 rounded focus:outline-none focus:shadow-outline">
-                    Add New
-                </button>
+                <!-- Add more fields here -->
             </div>
-        </form>
-    </section>
-</main>
+            <div class="mt-4">
+            <button type="submit" class="w-full py-2 bg-gray-900 text-white rounded-md hover:bg-gray-700 transition duration-200">Add New</button>
+            </div>
+        </div>
+    </div>
+</form>
 @include('partials.footer')

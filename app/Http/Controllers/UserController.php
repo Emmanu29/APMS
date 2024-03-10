@@ -19,10 +19,10 @@ class UserController extends Controller
 
          return view('users.edit', ['user' => $data]);
     }
-    
+
     public function index(){
         $data = [
-            "users" => DB::table('users')->where('isDeleted', false)->orderBy('created_at', 'desc')->simplePaginate(10)
+            "users" => DB::table('users')->where('isDeleted', false)->orderBy('created_at', 'desc')->simplePaginate(7)
         ];
 
         return view('users.index', $data);
@@ -82,15 +82,14 @@ class UserController extends Controller
         
         
         $user = User::create($validated);
- 
-        auth()->login($user, true); // Remember the user's login session
+        //auth()->login($user, true); // Remember the user's login session - inalis ko to dahil kapag nagcreate yung admin ng bagong temporary user yun ang nalologin
 
         return back()->with('message', 'Congratulation, your account has been successfully created');
      }
 
      public function register(){
         return view('users.register');
-    }
+            }
  
      public function logout(Request $request){
          auth()->logout();
@@ -113,6 +112,10 @@ class UserController extends Controller
             "email" => ['required', 'email', Rule::unique('users', 'email')->ignore($user->id)],
             "password" => 'required|confirmed|min:8'
         ]);
+
+        if ($validated['category'] === 'Admin User') {
+            $validated['dateTime'] = null;
+        }
     
         // Update the user record with validated data
         $user->update([

@@ -51,7 +51,7 @@ Route::delete('/animal/{animal}', [AnimalController::class, 'destroy'])->name('a
 
 Route::controller(UserController::class)->group(function(){
 
-     Route::get('/register','register')->middleware('auth');
+     Route::get('/register','register');
 
      Route::get('/login','login')->name('login')->middleware('guest');
 

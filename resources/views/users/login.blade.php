@@ -6,13 +6,13 @@
     }
 </style>
 
-<div class="container mx-auto flex justify-center items-center h-screen">
-    <div class="bg-gray-500 md:flex md:flex-row md:justify-center md:items-center rounded-lg shadow-md custom-border">
+<div class="container mx-auto flex justify-center items-center h-screen mt-5">
+    <div class="bg-gray-600 md:flex md:flex-row md:justify-center md:items-center rounded-lg shadow-md custom-border">
         <!-- Dog Image (hidden on small screens) -->
         <img src="{{ asset('images/dog.png') }}" alt="Dog" class="hidden md:block object-cover h-auto md:h-full md:w-1/2 rounded-lg">
         <div class="md:w-1/2 md:pl-8 py-8 px-4">
             <div class="text-center mb-8">
-                <small>Welcome!</small>
+                <h1><strong>Welcome!</strong></h1>
                 <h2 class="text-lg font-bold">Dapper Animal Patient Monitoring System</h2>
                 <h3 class="text-lg font-bold">Login</h3>
             </div>
@@ -32,10 +32,6 @@
                 </div>
                 <button id="log" type="submit" class="w-full py-2 bg-gray-900 text-white rounded-md hover:bg-gray-800 transition duration-200">Login</button>
             </form>
-            <div class="text-center mt-4">
-                <span class="text-sm">Forgot <a href="#" class="text-gray-500 hover:underline">password?</a></span>
-            </div>
-
             <script>
                 function myFunction() {
                     var x = document.getElementById("myInput");

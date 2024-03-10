@@ -5,6 +5,7 @@ use App\Models\Species;
 use App\Models\Animal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB; // Import the DB facade
+use Carbon\Carbon;
 
 class AnimalController extends Controller
 {
@@ -15,17 +16,26 @@ class AnimalController extends Controller
     // Retrieve animals data along with their associated species
     $animals = Animal::with('species') // Eager loading the 'species' relationship to avoid N+1 query issue
                     ->orderByDesc('created_at') // Order animals by their creation date in descending order
-                    ->simplePaginate(10); // Paginate the results with 10 animals per page
+                    ->simplePaginate(6); // Paginate the results with 10 animals per page
 
     // Pass the animals data to the 'animals.patient' view
     return view('animals.patient', compact('animals'));
-}
+    }
+
 
     public function showDashboard(){
-        // Retrieve animals data along with their associated species
 
+        // Get today's date
+        $today = Carbon::today();
+
+         // Count appointments created today
+        $appointmentsCountToday = DB::table('animals')
+        ->whereDate('dateTime', $today)
+        ->count();
+
+        $patientCount = Animal::count();
         // Pass the animals data to the 'animals.index' view
-        return view('animals.index');
+        return view('animals.index', compact('appointmentsCountToday','patientCount'));
     }
 
     public function create(){
@@ -46,6 +56,7 @@ class AnimalController extends Controller
         "weight" => 'required',
         "age" => 'required',
         "sex" => 'required',
+        "dateTime" => ['required', 'date_format:Y-m-d\TH:i'],
         "health_history" => 'required',
         "diagnosis" => 'required',
         "owner_name" => 'required',
@@ -57,16 +68,18 @@ class AnimalController extends Controller
 
     $speciesId = Species::where('name', $speciesName)->value('id');
     
+    // Create a new Animal using the validated data
     Animal::create([
         'species_id' => $speciesId,
-        'name' => $request->input('name'),
-        'weight' => $request->input('weight'),
-        'age' => $request->input('age'),
-        'sex' => $request->input('sex'),
-        'health_history' => $request->input('health_history'),
-        'diagnosis' => $request->input('diagnosis'),
-        'owner_name' => $request->input('owner_name'),
-        'owner_number' => $request->input('owner_number'),
+        'name' => $validatedData['name'],
+        'weight' => $validatedData['weight'],
+        'age' => $validatedData['age'],
+        'sex' => $validatedData['sex'],
+        'dateTime' => $validatedData['dateTime'],
+        'health_history' => $validatedData['health_history'],
+        'diagnosis' => $validatedData['diagnosis'],
+        'owner_name' => $validatedData['owner_name'],
+        'owner_number' => $validatedData['owner_number'],
     ]);
 
     // Redirect back with a success message
@@ -90,14 +103,14 @@ class AnimalController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Animal $animal)
-{
+    public function update(Request $request, Animal $animal){
     $validated = $request->validate([
         "species"        => 'required',
         "name"           => 'required|min:4',
         "weight"         => 'required',
         "age"            => 'required',
         "sex"            => 'required',
+        "dateTime"       => ['required', 'date_format:Y-m-d\TH:i'],
         "health_history" => 'required',
         "diagnosis"      => 'required',
         "owner_name"     => 'required',
@@ -126,7 +139,7 @@ class AnimalController extends Controller
     public function destroy(Animal $animal){
         $animal->delete();
 
-        return redirect('/')->with('message', 'Data was successfully deleted');
+        return redirect('/patients')->with('message', 'Data was successfully deleted');
     }
 
     public function search($name){

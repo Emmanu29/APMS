@@ -9,7 +9,7 @@
     <script src="//unpkg.com/alpinejs" defer></script>
 
 </head>
-<body class = "bg-green-200 min-h-screen">
+<body class = "bg-gray-600 min-h-screen">
 <x-messages/>
 
 

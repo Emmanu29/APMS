@@ -10,7 +10,7 @@
 
 <div class="relative overflow-x-auto shadow-2xl sm:rounded-lg mt-5 bg-blue-100 dark:bg-gray-800 max-w-6xl mx-auto mb-10 style="margin-top: 5rem;">
     <table class="w-full text-sm text-left rtl:text-right text-gray-700 dark:text-gray-400">
-        <thead class="text-xm text-gray-800 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-900 font-bold">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
                 <th scope="col" class="px-6 py-3">
                     Species
@@ -18,7 +18,7 @@
                 <th scope="col" class="px-6 py-3">
                     Name
                 </th>
-                <th scope="col" class="px-6 py-3">
+                <!-- <th scope="col" class="px-6 py-3">
                     Weight
                 </th>
                 <th scope="col" class="px-6 py-3">
@@ -26,12 +26,15 @@
                 </th>
                 <th scope="col" class="px-6 py-3">
                     Sex
-                </th>
+                </th> -->
                 <th scope="col" class="px-6 py-3">
-                    Health History
+                    Reason for Appointment
                 </th>
                 <th scope="col" class="px-6 py-3">
                     Diagnosis
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Date
                 </th>
                 <th scope="col" class="px-6 py-3">
                     Owner Name
@@ -53,7 +56,7 @@
                     <td class="px-6 py-4">
                         {{ $animal->name }}
                     </td>
-                    <td class="px-6 py-4">
+                    <!-- <td class="px-6 py-4">
                         {{ $animal->weight }}
                     </td>
                     <td class="px-6 py-4">
@@ -61,12 +64,15 @@
                     </td>
                     <td class="px-6 py-4">
                         {{ $animal->sex }}
-                    </td>
+                    </td> -->
                     <td class="px-6 py-4">
                         {{ $animal->health_history }}
                     </td>
                     <td class="px-6 py-4">
                         {{ $animal->diagnosis }}
+                    </td>
+                    <td class="px-6 py-4">
+                        {{ \Carbon\Carbon::parse($animal->dateTime)->formatLocalized('%B %d, %Y %I:%M %p') }}
                     </td>
                     <td class="px-6 py-4">
                         {{ $animal->owner_name }}

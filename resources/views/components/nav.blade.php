@@ -20,17 +20,17 @@
       @auth
           <ul class="flex flex-col font-medium mt-4 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-transparent dark:bg-gray-900 md:dark:bg-transparent dark:border-gray-700">
         <li>
-            <a href="/" class="block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-900 md:hover:bg-transparent md:border-0 md:hover:text-gray-700 dark:text-white md:dark:hover:text-gray-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Home</a>
+            <a href="/" target="_parent	" class="block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-900 md:hover:bg-transparent md:border-0 md:hover:text-gray-700 dark:text-white md:dark:hover:text-gray-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Home</a>
         </li>
         <li>
-            <a href="/patients" class="block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-900 md:hover:bg-transparent md:border-0 md:hover:text-gray-700 dark:text-white md:dark:hover:text-gray-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Patients</a>
+            <a href="/patients" target="_parent	" class="block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-900 md:hover:bg-transparent md:border-0 md:hover:text-gray-700 dark:text-white md:dark:hover:text-gray-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Patients</a>
         </li>
         @if(Auth::user()->category !== 'Temporary User')
         <li>
-            <a href="/users" class="block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-900 md:hover:bg-transparent md:border-0 md:hover:text-gray-700 dark:text-white md:dark:hover:text-gray-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Users</a>
+            <a href="/users" target="_parent	" class="block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-900 md:hover:bg-transparent md:border-0 md:hover:text-gray-700 dark:text-white md:dark:hover:text-gray-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Users</a>
         </li>
         <li id="add-new-link">
-            <a href="#" class="block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-900 md:hover:bg-transparent md:border-0 md:hover:text-gray-700 dark:text-white md:dark:hover:text-gray-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Add New</a>
+            <a href="#" target="_parent	" class="block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-900 md:hover:bg-transparent md:border-0 md:hover:text-gray-700 dark:text-white md:dark:hover:text-gray-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Add New</a>
         </li>
         @endif
         <li>
@@ -59,8 +59,9 @@
 
     // Regular expression pattern to match /user/{id}
     var userPattern = /^\/user\/\d+$/;
+    var animalPattern = /^\/animal\/\d+$/;
 
-    if (currentUrl === '/'|| currentUrl === '/register' || currentUrl === '/add/animal' || userPattern.test(currentUrl)) {
+    if (currentUrl === '/'|| currentUrl === '/register' || currentUrl === '/add/animal' || userPattern.test(currentUrl ) || animalPattern.test(currentUrl )) {
       // Hide the "Add New" link
       addNewLink.style.display = "none";
     }

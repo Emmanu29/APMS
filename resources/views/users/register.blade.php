@@ -1,35 +1,18 @@
 @include('partials.header')
 <?php $array = array('title' => 'Animal System') ;?>
 <x-nav :data="$array"/>
-    <div class="mx-auto bg-green-200 p-8 rounded-lg shadow-md text-center w-80 mt-10">
-        <h2 class="text-lg font-bold mb-4">Add New User</h2>
-        <form action="/store" method="POST">
-            @csrf
+<form action="/store" method="POST">
+@csrf
+    <div class="max-w-2xl mx-auto py-12 mt-10">
+        <div class="bg-gray-500 shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col border-4 border-gray-900">
+            <h2 class="text-lg font-bold mb-4 text-center">Add New User</h2>
+            <div class="grid grid-cols-2 gap-4">
+
             <div class="mb-4">
                 <label for="username" class="block mb-1">Username:</label>
                 <input type="text" id="username" name="username" 
                 placeholder="Username"class="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-400" value="{{old('username')}}">
                 @error('username')
-                <p class="text-red-500 text-xs mt-2 p-1">
-                    {{$message}}            
-                </p>
-                @enderror
-            </div>
-
-            <div class="mb-4">
-                <label for="firstName" class="block mb-1">First Name:</label>
-                <input type="text" id="firstName" name="firstName" placeholder="First Name" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-400" value="{{old('firstName')}}">
-                @error('firstName')
-                <p class="text-red-500 text-xs mt-2 p-1">
-                    {{$message}}            
-                </p>
-                @enderror
-            </div>
-
-            <div class="mb-4">
-                <label for="lastName" class="block mb-1">Last Name:</label>
-                <input type="text" id="lastName" name="lastName" placeholder="Last Name" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-400" value="{{old('lastName')}}">
-                @error('lastName')
                 <p class="text-red-500 text-xs mt-2 p-1">
                     {{$message}}            
                 </p>
@@ -49,7 +32,17 @@
                     <p class="text-red-500 text-xs mt-2 p-1">{{$message}}</p> 
                 @enderror
             </div>
-            
+
+            <div class="mb-4">
+                <label for="firstName" class="block mb-1">First Name:</label>
+                <input type="text" id="firstName" name="firstName" placeholder="First Name" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-400" value="{{old('firstName')}}">
+                @error('firstName')
+                <p class="text-red-500 text-xs mt-2 p-1">
+                    {{$message}}            
+                </p>
+                @enderror
+            </div>
+        
             <div class="mb-4" id="dateTimeField">
                 <label for="dateTime" class="block text-gray-700 text-sm font-bold mb-2" id="dateTimeLabel">Date and Time:</label>
                 <input type="datetime-local" id="dateTime" name="dateTime" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value="{{ $user->dateTime ?? old('dateTime') }}">
@@ -60,19 +53,29 @@
             </div>
 
             <div class="mb-4">
-                <label for="email" class="block mb-1">Email:</label>
-                <input type="email" id="email" name="email"  placeholder="Email" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-400" value="{{old('email')}}">
-                @error('email')
+                <label for="lastName" class="block mb-1">Last Name:</label>
+                <input type="text" id="lastName" name="lastName" placeholder="Last Name" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-400" value="{{old('lastName')}}">
+                @error('lastName')
                 <p class="text-red-500 text-xs mt-2 p-1">
                     {{$message}}            
                 </p>
                 @enderror
             </div>
-            
+
             <div class="mb-4">
                 <label for="password" class="block mb-1">Password:</label>
                 <input type="password" id="password" name="password" placeholder="Password" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-400">
                 @error('password')
+                <p class="text-red-500 text-xs mt-2 p-1">
+                    {{$message}}            
+                </p>
+                @enderror
+            </div>
+
+            <div class="mb-4">
+                <label for="email" class="block mb-1">Email:</label>
+                <input type="email" id="email" name="email"  placeholder="Email" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-400" value="{{old('email')}}">
+                @error('email')
                 <p class="text-red-500 text-xs mt-2 p-1">
                     {{$message}}            
                 </p>
@@ -88,13 +91,15 @@
                 </p>
                 @enderror
             </div>
-
-            <button type="submit" class="w-full py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition duration-200">Sign Up</button>
-        </form>
-        <a href="/users" class="block mt-4 text-green-500 hover:underline">Back</a>
+                <!-- Add more fields here -->
+            </div>
+            <div class="mt-4">
+            <button type="submit" class="w-full py-2 bg-gray-900 text-white rounded-md hover:bg-gray-700 transition duration-200">Submit</button>
+            </div>
+        </div>
     </div>
+</form>
 @include('partials.footer')
-
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         // Function to toggle the display of the time field based on the selected category
@@ -135,3 +140,7 @@
         toggleTimeField();
     });
 </script>
+
+
+
+
