@@ -25,6 +25,19 @@ class AnimalController extends Controller
 
     public function showDashboard(){
 
+
+        $appointmentsByMonth = Animal::selectRaw('DATE_FORMAT(dateTime, "%M") as month, COUNT(*) as count')
+        ->groupBy('month')
+        ->get()
+        ->pluck('count', 'month');
+
+        // Count species based on animals records and retrieve species names
+        $speciesCounts = Animal::select('species_id', DB::raw('COUNT(*) as count'))
+        ->with('species:id,name') // Eager load species names
+        ->groupBy('species_id')
+        ->get();
+
+        $animals = Animal::with('species')->orderByDesc('created_at');
         // Get today's date
         $today = Carbon::today();
 
@@ -35,7 +48,7 @@ class AnimalController extends Controller
 
         $patientCount = Animal::count();
         // Pass the animals data to the 'animals.index' view
-        return view('animals.index', compact('appointmentsCountToday','patientCount'));
+        return view('animals.index', compact('animals','appointmentsCountToday','patientCount','speciesCounts','appointmentsByMonth'));
     }
 
     public function create(){
@@ -86,8 +99,6 @@ class AnimalController extends Controller
     return redirect('/patients')->with('message', 'New Animal was added successfully');
 }
 
-
-
     /**
      * Display the specified resource.
      */
@@ -130,8 +141,6 @@ class AnimalController extends Controller
 
     return back()->with('message', 'Data was successfully updated');
 }
-    
-    
 
     /**
      * Remove the specified resource from storage.
@@ -142,7 +151,12 @@ class AnimalController extends Controller
         return redirect('/patients')->with('message', 'Data was successfully deleted');
     }
 
-    public function search($name){
-        return Animal::where('name', 'like', '%'.$name.'%')->get();
+    public function search(Request $request){
+        //return Animal::where('name', 'like', '%'.$name.'%')->get();
+
+        $searchName = $request->input('name');
+        $animals = Animal::where('name', 'like', '%' . $searchName . '%')->paginate(10); ;
+        
+        return view('animals.patient', ['animals' => $animals]);
     }
 }

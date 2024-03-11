@@ -139,7 +139,14 @@ class UserController extends Controller
         return redirect('/users')->with('message', 'Data was successfully deleted');
     }
     
+    public function search(Request $request){
+        //return Animal::where('name', 'like', '%'.$name.'%')->get();
 
+        $searchName = $request->input('name');
+        $users = User::where('username', 'like', '%' . $searchName . '%')->where('isDeleted', false)->paginate(10); ;
+        
+        return view('users.index', ['users' => $users]);
+    }
 
 
     // // Method to delete expired temporary users

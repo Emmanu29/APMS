@@ -82,6 +82,8 @@ Route::controller(UserController::class)->group(function(){
     Route::put('/user/{user}', 'update');
 
     Route::delete('/user/{user}', 'destroy')->name('user.destroy');
+
+    Route::get('/users/search',  'search')->name('users.search');
 });
 
 Route::controller(AnimalController::class)->group(function(){
@@ -99,6 +101,7 @@ Route::controller(AnimalController::class)->group(function(){
 
     Route::delete('/animal/{animal}', 'destroy')->name('animal.destroy');
 
+    Route::get('/animals/search',  'search')->name('animals.search');
 });
 
 
