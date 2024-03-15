@@ -17,4 +17,9 @@ class Animal extends Model
     {
         return $this->belongsTo(Species::class, 'species_id');
     }
+
+    public function consultations()
+    {
+        return $this->belongsTo(Consultation::class, 'animal_id');
+    }
 }

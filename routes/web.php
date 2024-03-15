@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AnimalController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ConsultationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -102,6 +103,12 @@ Route::controller(AnimalController::class)->group(function(){
     Route::delete('/animal/{animal}', 'destroy')->name('animal.destroy');
 
     Route::get('/animals/search',  'search')->name('animals.search');
+    
 });
 
 
+Route::controller(ConsultationController::class)->group(function(){
+    Route::get('/consultation/{consultation}','showReview');
+
+    Route::post('/add/review', 'storeExpertReview');
+});

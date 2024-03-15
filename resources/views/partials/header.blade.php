@@ -7,9 +7,8 @@
     @vite('resources/css/app.css')
 
     <script src="//unpkg.com/alpinejs" defer></script>
-
 </head>
-<body class = "bg-gray-600">
+<body style="background-color: rgb(118, 171, 174)">
 <x-messages/>
 
 

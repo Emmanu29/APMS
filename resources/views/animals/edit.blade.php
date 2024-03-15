@@ -2,8 +2,8 @@
 <?php $array = array('title' => 'Veterinary Dashboard') ;?>
 <x-nav :data="$array"/>
 <div class="max-w-2xl mx-auto py-12 mt-10">
-    <div class="bg-gray-500 shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col border-4 border-gray-900">
-        <h1 class="text-4xl font-bold text-black text-center mb-5">Edit {{$animal->name}}</h1>
+    <div class="bg-gray-500 shadow-md rounded-2xl px-8 pt-6 pb-8 mb-4 flex flex-col border-4 border-gray-900">
+        <h1 class="text-4xl font-bold text-black text-center mb-5">Edit {{$animal->name}}</h1> 
         <form action="/animal/{{$animal->id}}" method="POST">
             @method('PUT')
             @csrf
@@ -65,7 +65,7 @@
                     @enderror
                 </div>
 
-                <div class="mb-6">
+                <div class="">
                     <label for="health_history" class="block text-gray-700 text-sm font-bold mb-2">Reason for Appointment</label>
                     <textarea id="health_history" name="health_history" placeholder="Reason for Appointment" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">{{$animal->health_history}}</textarea>
                     @error('health_history')
@@ -73,7 +73,7 @@
                     @enderror
                 </div>
 
-                <div class="mb-4">
+                <div class="">
                     <label for="diagnosis" class="block text-gray-700 text-sm font-bold mb-2">Diagnosis</label>
                     <input type="text" id="diagnosis" name="diagnosis" placeholder="Diagnosis" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value="{{$animal->diagnosis}}">
                     @error('diagnosis')
@@ -81,7 +81,7 @@
                     @enderror
                 </div>
 
-                <div class="mb-4">
+                <div class="mb-8">
                     <label for="owner_name" class="block text-gray-700 text-sm font-bold mb-2">Owner Name</label>
                     <input type="text" id="owner_name" name="owner_name" placeholder="Owner Name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value="{{$animal->owner_name}}">
                     @error('owner_name')
@@ -89,7 +89,7 @@
                     @enderror
                 </div>
 
-                <div class="mb-4">
+                <div class="mb-8">
                     <label for="owner_number" class="block text-gray-700 text-sm font-bold mb-2">Owner Number</label>
                     <input type="number" id="owner_number" name="owner_number" placeholder="Owner Number" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value="{{$animal->owner_number}}">
                     @error('owner_number')
@@ -98,9 +98,15 @@
                 </div>
 
                 <!-- Add more fields here -->
-            </div>
+            
             <div class="flex items-center justify-center">
-                <button type="submit" class="w-full bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 mb-4 px-4 rounded focus:outline-none focus:shadow-outline">
+                <button type="button" onclick="window.location.href='/consultation/{{ $animal->id }}'" class="w-3/4 bg-emerald-800 hover:bg-gray-700 text-white font-bold py-2 mb-4 px-4 rounded focus:outline-none focus:shadow-outline">
+                    Expert Review
+                </button>
+            </div>
+
+            <div class="flex items-center justify-center">
+                <button type="submit" class="w-3/4 bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 mb-4 px-4 rounded focus:outline-none focus:shadow-outline">
                     Update
                 </button>
             </div>
@@ -109,11 +115,17 @@
             @csrf
             @method('delete')
             <div class="flex items-center justify-center">
-                <button type="submit" class="w-full bg-red-600 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                <button type="submit" class="w-3/4 bg-red-600 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                     Delete
                 </button>
             </div>
         </form>
+
+            <div class="flex items-center justify-center">
+                <button type="button" class="w-3/4 bg-sky-900 hover:bg-gray-700 text-white font-bold py-2 mb-4 px-4 rounded focus:outline-none focus:shadow-outline">
+                    Back
+                </button>
+            </div>
     </div>
 </div>
 @include('partials.footer')

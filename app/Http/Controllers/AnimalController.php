@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Species;
 use App\Models\Animal;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB; // Import the DB facade
 use Carbon\Carbon;
@@ -16,18 +17,19 @@ class AnimalController extends Controller
     // Retrieve animals data along with their associated species
     $animals = Animal::with('species') // Eager loading the 'species' relationship to avoid N+1 query issue
                     ->orderByDesc('created_at') // Order animals by their creation date in descending order
-                    ->simplePaginate(6); // Paginate the results with 10 animals per page
+                    ->simplePaginate(10); // Paginate the results with 10 animals per page
 
     // Pass the animals data to the 'animals.patient' view
     return view('animals.patient', compact('animals'));
     }
 
-
     public function showDashboard(){
-
+        $temporaryUsersCount = User::where('category', 'Temporary User')->where('isDeleted', false)->count();
+        $adminUsersCount = User::where('category', 'Admin User')->where('isDeleted', false)->count();
 
         $appointmentsByMonth = Animal::selectRaw('DATE_FORMAT(dateTime, "%M") as month, COUNT(*) as count')
         ->groupBy('month')
+        ->orderByRaw('MONTH(dateTime)')
         ->get()
         ->pluck('count', 'month');
 
@@ -48,7 +50,7 @@ class AnimalController extends Controller
 
         $patientCount = Animal::count();
         // Pass the animals data to the 'animals.index' view
-        return view('animals.index', compact('animals','appointmentsCountToday','patientCount','speciesCounts','appointmentsByMonth'));
+        return view('animals.index', compact('animals','appointmentsCountToday','patientCount','speciesCounts','appointmentsByMonth', 'temporaryUsersCount', 'adminUsersCount'));
     }
 
     public function create(){
@@ -109,8 +111,6 @@ class AnimalController extends Controller
         return view('animals.edit', ['animal' => $animal, 'speciesList' => $speciesList]);
     }
 
-    
-
     /**
      * Update the specified resource in storage.
      */
@@ -159,4 +159,5 @@ class AnimalController extends Controller
         
         return view('animals.patient', ['animals' => $animals]);
     }
+    
 }

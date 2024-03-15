@@ -44,7 +44,7 @@
 </script>
 
 <div class="max-w-2xl mx-auto py-12 mt-10">
-    <div class="bg-gray-500 shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col border-4 border-gray-900">
+    <div class="bg-gray-500 shadow-md rounded-2xl px-8 pt-6 pb-8 mb-4 flex flex-col border-4 border-gray-900">
         <form action="/user/{{$user->id}}" method="POST">
             @method('PUT')
             @csrf

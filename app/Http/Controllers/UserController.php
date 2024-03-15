@@ -22,7 +22,7 @@ class UserController extends Controller
 
     public function index(){
         $data = [
-            "users" => DB::table('users')->where('isDeleted', false)->orderBy('created_at', 'desc')->simplePaginate(7)
+            "users" => DB::table('users')->where('isDeleted', false)->orderBy('created_at', 'desc')->simplePaginate(10)
         ];
 
         return view('users.index', $data);

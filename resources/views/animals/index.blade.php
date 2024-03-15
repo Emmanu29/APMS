@@ -1,10 +1,21 @@
-@include('partials.header')
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{$title !== "" ? $title : 'Animal System'}}</title>
+    @vite('resources/css/app.css')
+
+    <script src="//unpkg.com/alpinejs" defer></script>
+</head>
+<body class="">
+
 <?php $array = array('title' => 'Veterinary Dashboard'); ?>
 <x-nav :data="$array" />
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
 
-<div class="flex flex-col bg-gradient-to-b from-gray-900 to-white p-5">
+<div class="flex flex-col bg-gradient-to-t from-gray-900 to-white p-5">
 
 <div class="flex flex-col md:flex-row justify-between mt-10">
         <!-- Species Chart -->
@@ -42,29 +53,26 @@
                 <div class="bg-gradient-to-br from-yellow-400 to-orange-500 rounded-lg shadow-lg p-6 text-white flex items-center">
                     <i class="fas fa-boxes text-4xl mr-4"></i>
                     <div>
-                        <h2 class="text-lg font-semibold mb-2">Total Room</h2>
-                        <p class="text-3xl">50</p>
+                        <h2 class="text-lg font-semibold mb-2">Temporary Users</h2>
+                        <p class="text-3xl">{{ $temporaryUsersCount }}</p>
                     </div>
                 </div>
                 <!-- Card 4: Total Staff -->
                 <div class="bg-gradient-to-br from-pink-400 to-red-500 rounded-lg shadow-lg p-6 text-white flex items-center">
                     <i class="fas fa-users text-4xl mr-4"></i>
                     <div>
-                        <h2 class="text-lg font-semibold mb-2">Total Staff</h2>
-                        <p class="text-3xl">15</p>
+                        <h2 class="text-lg font-semibold mb-2">Admin Users</h2>
+                        <p class="text-3xl">{{ $adminUsersCount }}</p>
                     </div>
                 </div>
             </div>
         </div>
     </main>
 </div>
+</body>
+</html>
 
-@include('partials.footer')
-
-
-
-
-    <script>
+<script>
 // Retrieve species counts from PHP and convert it to JavaScript object
 const speciesCounts = {!! json_encode($speciesCounts) !!};
 
@@ -95,7 +103,7 @@ const speciesDistributionConfig = {
             legend: {
                 position: 'left', // Position legend on the right side
                 labels: {
-                    color: 'rgb(255, 255, 255)', // Change label font color to white
+                    color: 'rgb(28, 31, 36)', // Change label font color to white
                     font: {
                         size: 12 // Adjust font size
                     }
@@ -105,24 +113,24 @@ const speciesDistributionConfig = {
     }
 };
 
-// Create Doughnut Chart for Species Distribution
-var speciesChartCtx = document.getElementById('speciesChart').getContext('2d');
-var speciesChart = new Chart(speciesChartCtx, speciesDistributionConfig);
+    // Create Doughnut Chart for Species Distribution
+    var speciesChartCtx = document.getElementById('speciesChart').getContext('2d');
+    var speciesChart = new Chart(speciesChartCtx, speciesDistributionConfig);
 
 
-// Define common color
-const commonColor = 'rgba(19, 16, 56, 0.89)';
+    // Define common color
+    const commonColor = 'rgba(19, 16, 56, 0.89)';
 
-// Line Chart Configuration
-const lineConfig = {
+    // Line Chart Configuration
+    const lineConfig = {
     type: 'line',
     data: {
         labels: {!! json_encode($appointmentsByMonth->keys()) !!}, // Extract month names as labels
         datasets: [{
             label: 'Appointments by Month',
             data: {!! json_encode($appointmentsByMonth->values()) !!}, // Extract appointment counts as data
-            borderColor: 'rgb(31, 32, 43)',
-            backgroundColor: 'rgb(167, 176, 235)',
+            borderColor: 'rgb(28, 31, 36)', //guhit
+            backgroundColor: 'rgb(129, 142, 163)', //tuldok
             tension: 0.1
         }]
     },
@@ -154,14 +162,14 @@ const lineConfig = {
                     color: commonColor
                 },
                 grid: {
-                    color: commonColor
+                    color: 'rgb(31, 32, 43)'
                 }
             }
         },
         plugins: {
             legend: {
                 labels: {
-                    color: 'rgb(167, 176, 235)',
+                    color: 'rgb(28, 31, 36)',
                 }
             }
         }

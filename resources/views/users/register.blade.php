@@ -4,7 +4,7 @@
 <form action="/store" method="POST">
 @csrf
     <div class="max-w-2xl mx-auto py-12 mt-10">
-        <div class="bg-gray-500 shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col border-4 border-gray-900">
+        <div class="bg-gray-500 shadow-md rounded-2xl px-8 pt-6 pb-8 mb-4 flex flex-col border-4 border-gray-900">
             <h2 class="text-lg font-bold mb-4 text-center">Add New User</h2>
             <div class="grid grid-cols-2 gap-4">
 
