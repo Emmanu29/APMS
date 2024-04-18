@@ -100,13 +100,13 @@
                 <!-- Add more fields here -->
             
             <div class="flex items-center justify-center">
-                <button type="button" onclick="window.location.href='/consultation/{{ $animal->id }}'" class="w-3/4 bg-emerald-800 hover:bg-gray-700 text-white font-bold py-2 mb-4 px-4 rounded focus:outline-none focus:shadow-outline">
+                <button type="button" onclick="window.location.href='/consultation/{{ $animal->id }}'" class="w-3/4 bg-emerald-800 hover:bg-emerald-700 text-white font-bold py-2 mb-4 px-4 rounded focus:outline-none focus:shadow-outline">
                     Expert Review
                 </button>
             </div>
 
             <div class="flex items-center justify-center">
-                <button type="submit" class="w-3/4 bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 mb-4 px-4 rounded focus:outline-none focus:shadow-outline">
+                <button type="submit" class="w-3/4 bg-gray-900 hover:bg-gray-800 text-white font-bold py-2 mb-4 px-4 rounded focus:outline-none focus:shadow-outline">
                     Update
                 </button>
             </div>
@@ -122,7 +122,7 @@
         </form>
 
             <div class="flex items-center justify-center">
-                <button type="button" class="w-3/4 bg-sky-900 hover:bg-gray-700 text-white font-bold py-2 mb-4 px-4 rounded focus:outline-none focus:shadow-outline">
+                <button type="button" class="w-3/4 bg-sky-900 hover:bg-sky-800  text-white font-bold py-2 mb-4 px-4 rounded focus:outline-none focus:shadow-outline">
                     Back
                 </button>
             </div>

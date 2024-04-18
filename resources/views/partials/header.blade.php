@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{$title !== "" ? $title : 'Animal System'}}</title>
-    @vite('resources/css/app.css')
+    <link href="{{ asset('/build/assets/app-83f76dfa.css') }}" rel="stylesheet">
+    <script src="{{ asset('/build/assets/app-a5991337.js') }}"></script>
+
+    <!-- @vite('resources/css/app.css') -->
 
     <script src="//unpkg.com/alpinejs" defer></script>
 </head>
